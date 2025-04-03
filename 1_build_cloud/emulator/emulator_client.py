@@ -13,10 +13,10 @@ device_end = 100
 device_ids = ['thing1']
 
 #Path to the dataset, modify this
-data_path = "./data/vehicle0.csv"
+data_path = "./data/vehicle{}.csv"
 
 #Path to your certificates, modify this
-certificate_formatter = "./keys/{}-certificate.pem.crt"
+certificate_formatter = "./keys/device{}-certificate.pem.crt"
 key_formatter = "device.private.pem"
 
 
