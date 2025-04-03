@@ -10,13 +10,13 @@ import numpy as np
 #Starting and end index, modify this
 device_st = 0
 device_end = 100
-device_ids = ['thing1', 'thing2']
+device_ids = ['thing1']
 
 #Path to the dataset, modify this
 data_path = "./data/vehicle0.csv"
 
 #Path to your certificates, modify this
-certificate_formatter = "certificate.pem"
+certificate_formatter = "./keys/certificate.pem"
 key_formatter = "device.private.pem"
 
 

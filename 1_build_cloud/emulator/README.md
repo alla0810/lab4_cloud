@@ -8,6 +8,11 @@ This project uploads the certificates created from "createThing-Cert.py" to the 
 
       pip install AWSIoTPythonSDK
 
+* Install `panda`
+
+      pip install pandas
+
+
 
 ## Getting Started
 
