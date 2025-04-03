@@ -1,13 +1,14 @@
 # Create AWS IoT Thing using python and boto3
 
-This project will create a thing on AWS IoT platform using boto3 and python and download the certificates.
+This project will create things on AWS IoT platform using boto3 and python and download the certificates.
 
 ## Requirements
 
 * AWS IAM User needs to have the permission for `AWSIoTFullAccess` and `AWSIoTDataAccess`
 
+* Create a policy named `policy1`
 
-* AWS Credentials, if you have installed AWS CLI, then you can use it to configure your credentials file:
+* After installing AWS CLI, then you can use it to configure your credentials file:
 
       aws configure
 
@@ -16,9 +17,9 @@ This project will create a thing on AWS IoT platform using boto3 and python and 
       aws_access_key_id = YOUR_ACCESS_KEY
       aws_secret_access_key = YOUR_SECRET_KEY
       
-* Python
-* Boto3, you can find more information about it [here](https://boto3.readthedocs.io/en/latest/guide/quickstart.html#installation)
-* Create a policy named `policy1` or change `defaultPolicyName` value in source code to your appropriate policy.
+* Install Boto3.  You can find more information about Boto3 [here](https://boto3.readthedocs.io/en/latest/guide/quickstart.html#installation)
+
+* Change `defaultPolicyName`, `thingGroupName`, `thingGroupArn` values in source code to your appropriate ones.
 
 ## Getting Started
 
@@ -41,7 +42,9 @@ This project will create a thing on AWS IoT platform using boto3 and python and 
 
 * Clone the repository
 
-      git clone https://github.com/keivanK1/aws-create-thing-boto3.git
+      git clone https://github.com/alla0810/lab4_cloud
+
+      cd to `./1_build_cloud` directory
 
 * Make `certificates` directory    
 
@@ -53,8 +56,8 @@ This project will create a thing on AWS IoT platform using boto3 and python and 
       python createThing-Cert.py
 
 ## References
-This implementation is bassed on the following sources:  
-[aws create thing](https://github.com/keivanK1/aws-create-thing-boto3.git)
+This implementation references the following sources:    
+* [keivanK1/aws-create-thing-boto3.git](https://github.com/keivanK1/aws-create-thing-boto3.git)
 
 ## License
 This project is open-source and free to use under the MIT License.
