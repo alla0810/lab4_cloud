@@ -16,8 +16,8 @@ device_ids = ['thing1']
 data_path = "./data/vehicle{}.csv"
 
 #Path to your certificates, modify this
-certificate_formatter = "./keys/device{}-certificate.pem.crt"
-key_formatter = "device.private.pem"
+certificate_formatter = "./keys/device{}/certificate.pem.crt"
+key_formatter = "./keys/device{}/private.pem.key"
 
 
 class MQTTClient:
