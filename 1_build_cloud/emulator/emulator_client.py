@@ -16,7 +16,7 @@ device_ids = ['thing1']
 data_path = "./data/vehicle0.csv"
 
 #Path to your certificates, modify this
-certificate_formatter = "./keys/certificate.pem"
+certificate_formatter = "./keys/{}-certificate.pem.crt"
 key_formatter = "device.private.pem"
 
 
