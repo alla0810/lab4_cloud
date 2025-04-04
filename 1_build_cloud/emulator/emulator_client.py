@@ -4,20 +4,22 @@ import time
 import json
 import pandas as pd
 import numpy as np
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 
 #TODO 1: modify the following parameters
 #Starting and end index, modify this
 device_st = 0
-device_end = 100
-device_ids = ['thing1']
+device_end = 1
+#device_ids = ['thing1']
 
 #Path to the dataset, modify this
 data_path = "./data/vehicle{}.csv"
 
 #Path to your certificates, modify this
-certificate_formatter = "./keys/device{}/certificate.pem.crt"
-key_formatter = "./keys/device{}/private.pem.key"
+certificate_formatter = "./keys/device{}/device{}_certificate.pem.crt"
+key_formatter = "./keys/device{}/device{}_private.pem.key"
 
 
 class MQTTClient:
@@ -38,7 +40,7 @@ class MQTTClient:
 
     def customOnMessage(self,message):
         #TODO 3: fill in the function to show your received message
-        print("client {} received payload {} from topic {}".format(self.device_id))
+        print("client {} received payload {} from topic {}".format(self.device_id, message.payload, message.topic))
 
 
     # Suback callback
@@ -53,19 +55,9 @@ class MQTTClient:
         pass
 
 
-    def publish(self, topic="vehicle/emission/data"):
-    # Load the vehicle's emission data
-        df = pd.read_csv(data_path.format(self.device_id))
-        for index, row in df.iterrows():
-            # Create a JSON payload from the row data
-            payload = json.dumps(row.to_dict())
-            
-            # Publish the payload to the specified topic
-            print(f"Publishing: {payload} to {topic}")
-            self.client.publishAsync(topic, payload, 0, ackCallback=self.customPubackCallback)
-            
-            # Sleep to simulate real-time data publishing
-            
+    def publish(self, Payload="payload"):
+        self.client.subscribeAsync("myTopic", 0, ackCallback=self.customSubackCallback)            
+        self.client.publishAsync("myTopic", Payload, 0, ackCallback=self.customPubackCallback)
 
 
 
