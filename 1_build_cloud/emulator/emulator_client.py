@@ -11,15 +11,15 @@ logging.basicConfig(level=logging.DEBUG)
 #TODO 1: modify the following parameters
 #Starting and end index, modify this
 device_st = 0
-device_end = 1
-#device_ids = ['thing1']
+device_end = 5
+
 
 #Path to the dataset, modify this
 data_path = "./data/vehicle{}.csv"
 
 #Path to your certificates, modify this
-certificate_formatter = "../createThings/certificates/vehicle{}_certificate.pem.crt"
-key_formatter = "./keys/device{}/device{}_private.pem.key"
+certificate_formatter = "../createThings/certificates/vehicle_{}_cert.pem"
+key_formatter = "../createThings/certificates/vehicle_{}_private.key"
 
 
 class MQTTClient:
@@ -70,7 +70,7 @@ for i in range(5):
 print("Initializing MQTTClients...")
 clients = []
 for device_id in range(device_st, device_end):
-    client = MQTTClient(device_id,certificate_formatter.format(device_id,device_id) ,key_formatter.format(device_id,device_id))
+    client = MQTTClient(device_id,certificate_formatter.format(device_id) ,key_formatter.format(device_id))
     client.client.connect()
     clients.append(client)
  
