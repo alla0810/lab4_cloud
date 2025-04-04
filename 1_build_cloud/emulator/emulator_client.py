@@ -5,7 +5,7 @@ import json
 import pandas as pd
 import numpy as np
 import logging
-logging.basicConfig(level=logging.DEBUG)
+#logging.basicConfig(level=logging.DEBUG)
 
 
 #TODO 1: modify the following parameters
