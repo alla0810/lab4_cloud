@@ -1,8 +1,14 @@
 # Device Simulator
 
-This project uploads the certificates created from "createThing-Cert.py" to the AWS emulators and connects the emulators to the IoT core.
+This project initializes five AWS MQTT Clients that were created by running `createThing-Cert.py` and connects them to the AWS IoT core.  To check if the MQTT Clients have been successfully connected to the AWS core, they are subscribing to "vehicle/emission/data" topic, and publish data read from `vehicle[0].csv`~`vehicle[4].csv` files.
 
 ## Requirements
+
+* Virtual Environment
+      `emulator_client.py` should be run under virtual environment.
+
+      python -m venv .venv  
+      source .venv/bin/activate       
 
 * Install `AWSIoTPythonSDK`
 
@@ -13,44 +19,39 @@ This project uploads the certificates created from "createThing-Cert.py" to the 
       pip install pandas
 
 
-
 ## Getting Started
 
-* Set up AWS CLI  
-    Install the AWS CLI for Raspberry Pi.
+* run `createThin-Cert.py` first before running `emulator_client.py`  
 
-      curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"
-      unzip awscliv2.zip
-      sudo ./aws/install
+* Directory Structure    
+    To run `emulator_client.py`, keeping the directory structure is important.
 
-    AWS CLI is successfully installed if you can see the following when you type `aws --version` command  
+    1. `createThings` directory and `emulator` directory need to be under the same path.  
+    2. `data` directory needs to be under `emulator` directory.  
+    3. `keys` directory needs to be under `emulator` directory.  
+    4. `certificates` directory needs to be under `createThings` directory.  
+        => `certificates` directory has been automatically created after running `createThing-Cert.py`.  Do not change this directory structure.  
 
-      aws-cli/2.x.x Python/3.x.x Linux/aarch64
+* File names  
+      1. `emulator_client.py` reads vehicle data from `./data/vehicle[0].csv`~`./data/vehicle[4].csv`.  Do not change these file names  
+      2. `emulator_client.py` reads AWS Root key from `./keys/AmazonRootCA1.pem` file.  Download AWS Root key here, and rename it to `AmazonRootCA1.pem`  
+      3. `emulator_client.py` uses certificates that were created when running `createThing-Cert.py`.  Do not change `../createThings/certificates` directory and the contents of it.  
 
-* Install boto3 inside venv
-
-      python -m venv .venv
-      source .venv/bin/activate      
-      pip install boto3
-
-* Clone the repository
-
-      git clone https://github.com/alla0810/lab4_cloud
-
-      cd to `./1_build_cloud` directory
-
-* Make `certificates` directory    
-
-      mkdir certificates
+* AWS Endpoint  
+      Copy the AWS End Point and overwrite it to the `configureEndpoint(ENDPOINT)` part in line 32.
 
 
-* Run it
+* How to run
 
-      python createThing-Cert.py
+      python emulator_client.py  
+
+* Publish data  
+      After all MQTTClients are initialized and subscribe to "vehicle/emission/data" topic, it will ask "send now?" to publish.  Hit `s` to publish vehicle data.
+
 
 ## References
 This implementation references the following sources:    
-* [keivanK1/aws-create-thing-boto3.git](https://github.com/keivanK1/aws-create-thing-boto3.git)
+* [base code from Professor Matthew Caesar](https://drive.google.com/file/d/14ijMcHnxDTTCNwe-G3DWfy0ZF1C-5pmX/view)
 
 ## License
 This project is open-source and free to use under the MIT License.

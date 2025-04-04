@@ -1,6 +1,6 @@
 # Create AWS IoT Thing using python and boto3
 
-This project will create things on AWS IoT platform using boto3 and python and download the certificates.
+This project will create things on AWS IoT platform using boto3 and download the certificates.
 
 ## Requirements
 
@@ -12,7 +12,7 @@ This project will create things on AWS IoT platform using boto3 and python and d
 
       aws configure
 
-  if don't you can create a credentials by creating credentials file under `~/.aws/` (`~/.aws/credentials`) and put:
+  You can create a credentials by creating credentials file under `~/.aws/` (`~/.aws/credentials`) and put:
   
       aws_access_key_id = YOUR_ACCESS_KEY
       aws_secret_access_key = YOUR_SECRET_KEY
@@ -45,11 +45,6 @@ This project will create things on AWS IoT platform using boto3 and python and d
       git clone https://github.com/alla0810/lab4_cloud
 
       cd to `./1_build_cloud` directory
-
-* Make `certificates` directory    
-
-      mkdir certificates
-
 
 * Run it
 
