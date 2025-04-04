@@ -1,11 +1,11 @@
 ################################################### Connecting to AWS
 import boto3
 import os
+import shutil
 import json
 ################################################### Create random name for things
 import random
 import string
-
 ################################################### Parameters for Thing
 thingArn = ''
 thingId = ''
@@ -65,12 +65,17 @@ def createCertificate(thingName):
 	)
 
 
+certDir = "./certificates"
+if os.path.exists(certDir):
+	shutil.rmtree(certDir)
+os.mkdir(certDir)
 
 thingClient = boto3.client('iot')
 
 def main(): 
 	for i in range(5):
-		thingName = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(15)])
+		thingName = 'vehicle_' + str(i)
+
 		createThing(thingName)
 
 if __name__ == '__main__':
