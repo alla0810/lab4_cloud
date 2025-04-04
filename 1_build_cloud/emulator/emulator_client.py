@@ -54,24 +54,38 @@ class MQTTClient:
         #You don't need to write anything here
         pass
 
+    def subscribe(self, topic="vehicle/emission/data"):
+        self.client.subscribeAsync(topic, 0, ackCallback=self.customSubackCallback)
+        print(f"Device {self.device_id} subscribed to {topic}")
 
-    def publish(self, Payload="payload"):
-        self.client.subscribeAsync("myTopic", 0, ackCallback=self.customSubackCallback)            
-        self.client.publishAsync("myTopic", Payload, 0, ackCallback=self.customPubackCallback)
 
+    def publish(self, topic="vehicle/emission/data"):
+        # Load the vehicle's emission data from file
+        df = pd.read_csv(data_path.format(self.device_id))
+
+        for index, row in df.iterrows():
+            payload = json.dumps(row.to_dict())
+
+            # Publish to topic
+            print(f"Device {self.device_id} publishing: {payload} to {topic}")
+            self.client.publishAsync(topic, payload, 0, ackCallback=self.customPubackCallback)
+
+            # Optional: simulate real-time data publishing
+            time.sleep(1)
 
 
 print("Loading vehicle data...")
-data = []
+vehicle_data = []
 for i in range(5):
     a = pd.read_csv(data_path.format(i))
-    data.append(a)
+    vehicle_data.append(a)
 
 print("Initializing MQTTClients...")
 clients = []
 for device_id in range(device_st, device_end):
     client = MQTTClient(device_id,certificate_formatter.format(device_id) ,key_formatter.format(device_id))
     client.client.connect()
+    client.subscribe("vehicle/emission/data")
     clients.append(client)
  
 
