@@ -71,7 +71,7 @@ class MQTTClient:
             self.client.publishAsync(topic, payload, 0, ackCallback=self.customPubackCallback)
 
             # Optional: simulate real-time data publishing
-            time.sleep(1)
+            time.sleep(0.1)
 
 
 print("Loading vehicle data...")
