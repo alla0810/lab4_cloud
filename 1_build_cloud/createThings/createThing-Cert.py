@@ -42,11 +42,11 @@ def createCertificate(thingName):
 			elif element == 'certificateId':
 					certificateId = data['certificateId']
 							
-	with open(os.path.join('certificates', '') + thingName + 'public.key', 'w') as outfile:
+	with open(os.path.join('certificates', '') + thingName + '_public.key', 'w') as outfile:
 			outfile.write(PublicKey)
-	with open(os.path.join('certificates', '') + thingName + 'private.key', 'w') as outfile:
+	with open(os.path.join('certificates', '') + thingName + '_private.key', 'w') as outfile:
 			outfile.write(PrivateKey)
-	with open(os.path.join('certificates', '') + thingName + 'cert.pem', 'w') as outfile:
+	with open(os.path.join('certificates', '') + thingName + '_cert.pem', 'w') as outfile:
 			outfile.write(certificatePem)
 
 	response = thingClient.attach_policy(

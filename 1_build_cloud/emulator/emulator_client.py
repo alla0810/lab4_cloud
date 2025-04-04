@@ -18,7 +18,7 @@ device_end = 1
 data_path = "./data/vehicle{}.csv"
 
 #Path to your certificates, modify this
-certificate_formatter = "./keys/device{}/device{}_certificate.pem.crt"
+certificate_formatter = "../createThings/certificates/vehicle{}_certificate.pem.crt"
 key_formatter = "./keys/device{}/device{}_private.pem.key"
 
 
