@@ -8,6 +8,10 @@ from awscrt.mqtt import QoS
 from awsiot.greengrass_discovery import DiscoveryClient
 from awsiot import mqtt_connection_builder
 
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), 'utils'))
+
 from utils.command_line_utils import CommandLineUtils
 
 allowed_actions = ['both', 'publish', 'subscribe']
