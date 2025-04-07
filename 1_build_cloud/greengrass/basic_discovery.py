@@ -10,7 +10,9 @@ from awsiot import mqtt_connection_builder
 
 import sys
 import os
+
 sys.path.append(os.path.join(os.path.dirname(__file__), 'utils'))
+print(sys.path)
 
 from utils.command_line_utils import CommandLineUtils
 
