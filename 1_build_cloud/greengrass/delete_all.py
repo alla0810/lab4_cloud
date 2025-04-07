@@ -2,10 +2,10 @@ import boto3
 
 AWS_ACCOUNT_ID = '058264177579'
 
-iot = boto3.client('iot')
+iot = boto3.client('iot', region_name='us-east-1')  
 
 def detach_and_delete_certificate(cert_id):
-    cert_arn = f'arn:aws:iot:us-east-1:{AWS_ACCOUNT_ID}:cert/{cert_id}'  # 계정 ID 상수 사용
+    cert_arn = f'arn:aws:iot:us-east-1:{AWS_ACCOUNT_ID}:cert/{cert_id}'  
     
     # Detach from policies
     policies = iot.list_principal_policies(principal=cert_arn)['policies']
