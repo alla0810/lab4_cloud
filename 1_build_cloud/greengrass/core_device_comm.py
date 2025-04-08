@@ -20,7 +20,7 @@ data_path = "../emulator/data/vehicle{}.csv"
 cert_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cert")
 
 #Path to your certificates, modify this
-core_device_certificate_path = os.path.join(cert_dir, "thingCert.pem")
+core_device_certificate_path = os.path.join(cert_dir, "thingCert.crt")
 core_device_key_path = os.path.join(cert_dir, "thingPrivateKey.pem")
 core_device_root_ca_path = os.path.join(cert_dir, "rootCA.pem")
 

@@ -4,5 +4,6 @@
 /certificates
 .keys
 .pem
+.crt
 /cert
 
