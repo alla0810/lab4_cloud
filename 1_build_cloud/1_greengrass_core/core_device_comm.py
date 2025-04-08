@@ -42,13 +42,30 @@ def copy_certificates():
     for cert_file in cert_files:
         source_file_path = os.path.join(source_cert_dir, cert_file)
         dest_file_path = os.path.join(dest_cert_dir, cert_file)
-        
+
         if os.path.exists(source_file_path):
-            shutil.copy(source_file_path, dest_file_path)
-            print(f"Successfully copied {cert_file} to {dest_cert_dir}")
+            try:
+                # Check if the file is readable
+                if not os.access(source_file_path, os.R_OK):
+                    print(f"Error: {cert_file} is not readable.")
+                    continue
+
+                # Attempt to copy the file
+                shutil.copy(source_file_path, dest_file_path)
+                print(f"Successfully copied {cert_file} to {dest_cert_dir}")
+
+            except PermissionError:
+                print(f"PermissionError: Unable to access {cert_file} from {source_cert_dir}")
+                print("Attempting to run with elevated privileges (sudo)...")
+
+                # Try running with sudo if needed (e.g., using subprocess)
+                import subprocess
+                subprocess.run(["sudo", "python3", __file__])
+                break
+
         else:
             print(f"Error: {cert_file} does not exist in {source_cert_dir}")
-
+            
 
 class MQTTClient:
     def __init__(self, device_id, cert, key):
