@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 import logging
 #logging.basicConfig(level=logging.DEBUG)
-
+import os
 
 #TODO 1: modify the following parameters
 #Starting and end index, modify this
@@ -17,9 +17,12 @@ device_end = 1
 #Path to the dataset, modify this
 data_path = "../emulator/data/vehicle{}.csv"
 
+cert_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cert")
+
 #Path to your certificates, modify this
-core_device_certificate_path = "./cert/thingCert.pem"
-core_device_key_path = "./cert/privKey.key"
+core_device_certificate_path = os.path.join(cert_dir, "thingCert.pem")
+core_device_key_path = os.path.join(cert_dir, "thingPrivateKey.pem")
+core_device_root_ca_path = os.path.join(cert_dir, "rootCA.pem")
 
 
 class MQTTClient:
@@ -30,7 +33,7 @@ class MQTTClient:
         self.client = AWSIoTMQTTClient(self.device_id)
         #TODO 2: modify your broker address
         self.client.configureEndpoint("a2rf5cc3bhluy5-ats.iot.us-east-1.amazonaws.com", 8883)
-        self.client.configureCredentials("./cert/rootCA.pem", key, cert)
+        self.client.configureCredentials(core_device_root_ca_path, key, cert)
         self.client.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
         self.client.configureDrainingFrequency(2)  # Draining: 2 Hz
         self.client.configureConnectDisconnectTimeout(10)  # 10 sec
