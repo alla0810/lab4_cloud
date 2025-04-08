@@ -18,8 +18,8 @@ device_end = 1
 data_path = "../emulator/data/vehicle{}.csv"
 
 #Path to your certificates, modify this
-certificate_formatter = "./cert/thingCert.pem"
-key_formatter = "./cert/privKey.key"
+core_device_certificate_path = "./cert/thingCert.pem"
+core_device_key_path = "./cert/privKey.key"
 
 
 class MQTTClient:
@@ -83,7 +83,7 @@ for i in range(5):
 print("Initializing MQTTClients...")
 clients = []
 for device_id in range(device_st, device_end):
-    client = MQTTClient(device_id,certificate_formatter.format(device_id) ,key_formatter.format(device_id))
+    client = MQTTClient(device_id,core_device_certificate_path ,core_device_key_path)
     client.client.connect()
     client.subscribe("vehicle/emission/data")
     clients.append(client)
