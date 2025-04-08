@@ -17,7 +17,7 @@ device_end = 1
 
 
 #Path to the dataset, modify this
-data_path = "../3_emulator/data/vehicle{}.csv"
+data_path = "./data/vehicle{}.csv"
 
 cert_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cert")
 

@@ -2,10 +2,10 @@ import boto3
 
 AWS_ACCOUNT_ID = '058264177579'
 
-iot = boto3.client('iot', region_name='us-east-1')  
+iot = boto3.client('iot', region_name='us-east-1')
 
 def detach_and_delete_certificate(cert_id):
-    cert_arn = f'arn:aws:iot:us-east-1:{AWS_ACCOUNT_ID}:cert/{cert_id}'  
+    cert_arn = f'arn:aws:iot:us-east-1:{AWS_ACCOUNT_ID}:cert/{cert_id}'
     
     # Detach from policies
     policies = iot.list_principal_policies(principal=cert_arn)['policies']
@@ -25,43 +25,33 @@ def detach_and_delete_certificate(cert_id):
     print(f" Deleting cert {cert_id}")
     iot.delete_certificate(certificateId=cert_id, forceDelete=True)
 
-def delete_all_things():
+def delete_things_and_certificates():
+    # List all things
     things = iot.list_things()['things']
+    
     for thing in things:
         thing_name = thing['thingName']
-        print(f"Deleting thing: {thing_name}")
+        print(f"Processing thing: {thing_name}")
+        
+        # List all certificates attached to this thing
         principals = iot.list_thing_principals(thingName=thing_name)['principals']
+        
         for principal in principals:
-            iot.detach_thing_principal(thingName=thing_name, principal=principal)
+            cert_arn = principal
+            cert_id = cert_arn.split('/')[-1]  # Extract certificate ID from ARN
+            print(f" Detaching certificate {cert_id} from thing {thing_name}")
+            iot.detach_thing_principal(thingName=thing_name, principal=cert_arn)
+            # Delete the certificate
+            print(f" Deleting certificate {cert_id}")
+            detach_and_delete_certificate(cert_id)
+        
+        # Delete the thing after handling its certificates
+        print(f"Deleting thing: {thing_name}")
         iot.delete_thing(thingName=thing_name)
 
-def delete_all_certificates():
-    certs = iot.list_certificates()['certificates']
-    for cert in certs:
-        cert_id = cert['certificateId']
-        print(f"Handling certificate: {cert_id}")
-        detach_and_delete_certificate(cert_id)
-
-def delete_all_policies():
-    policies = iot.list_policies()['policies']
-    for policy in policies:
-        policy_name = policy['policyName']
-        print(f"Deleting policy: {policy_name}")
-        iot.delete_policy(policyName=policy_name)
-
-def delete_all_thing_groups():
-    groups = iot.list_thing_groups()['thingGroups']
-    for group in groups:
-        name = group['groupName']
-        print(f"Deleting thing group: {name}")
-        iot.delete_thing_group(thingGroupName=name)
-
 def main():
-    print("Starting AWS IoT cleanup...")
-    delete_all_things()
-    delete_all_certificates()
-    delete_all_policies()
-    delete_all_thing_groups()
+    print("Starting AWS IoT cleanup for things and certificates...")
+    delete_things_and_certificates()
     print("Cleanup complete.")
 
 if __name__ == "__main__":
