@@ -36,6 +36,9 @@ def createCertificate(thingName):
 	if os.path.exists(certFile):
 		print(f"Certificate for {thingName} already exists.  Skipping certificate creation")
 		return
+	
+	if not os.path.exists(certDir):
+		os.mkdir(certDir)	
 
 	certResponse = thingClient.create_keys_and_certificate(
 			setAsActive = True
