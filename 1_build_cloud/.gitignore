@@ -2,3 +2,7 @@
 .venv
 /keys
 /certificates
+.keys
+.pem
+/cert
+
