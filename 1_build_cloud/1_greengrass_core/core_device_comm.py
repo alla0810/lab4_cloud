@@ -7,6 +7,8 @@ import numpy as np
 import logging
 #logging.basicConfig(level=logging.DEBUG)
 import os
+import shutil
+
 
 #TODO 1: modify the following parameters
 #Starting and end index, modify this
@@ -23,6 +25,29 @@ cert_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cert")
 core_device_certificate_path = os.path.join(cert_dir, "thingCert.crt")
 core_device_key_path = os.path.join(cert_dir, "privKey.key")
 core_device_root_ca_path = os.path.join(cert_dir, "rootCA.pem")
+
+def copy_certificates():
+    # Path to the source and destination directories
+    source_cert_dir = "/greengrass/v2/"
+    dest_cert_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cert")
+
+    # List of the required certificate files
+    cert_files = ["privKey.key", "thingCert.crt", "rootCA.pem"]
+
+    # Ensure the destination directory exists
+    if not os.path.exists(dest_cert_dir):
+        os.mkdir(dest_cert_dir)
+
+    # Copy certificate files from /greengrass/v2/ to cert directory
+    for cert_file in cert_files:
+        source_file_path = os.path.join(source_cert_dir, cert_file)
+        dest_file_path = os.path.join(dest_cert_dir, cert_file)
+        
+        if os.path.exists(source_file_path):
+            shutil.copy(source_file_path, dest_file_path)
+            print(f"Successfully copied {cert_file} to {dest_cert_dir}")
+        else:
+            print(f"Error: {cert_file} does not exist in {source_cert_dir}")
 
 
 class MQTTClient:
@@ -76,6 +101,7 @@ class MQTTClient:
             # Optional: simulate real-time data publishing
             time.sleep(0.1)
 
+copy_certificates()
 
 print("Loading vehicle data...")
 vehicle_data = []
