@@ -111,9 +111,14 @@ def createCertificate(thingName):
 			outfile.write(certificatePem)
 
 	response = thingClient.attach_policy(
-			policyName = defaultPolicyName,
+			policyName = defaultPolicyName1,
 			target = certificateArn
 	)
+	response = thingClient.attach_policy(
+			policyName = defaultPolicyName2,
+			target = certificateArn
+	)
+
 	response = thingClient.attach_thing_principal(
 			thingName = thingName,
 			principal = certificateArn

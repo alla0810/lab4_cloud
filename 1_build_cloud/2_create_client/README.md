@@ -33,7 +33,7 @@ This project will create things on AWS IoT platform using boto3 and download the
 
 ## How to Run
 
-* Change `defaultPolicyName1` to `GreengrassV2IoTThingPolicy` in source code    
+* Change `defaultPolicyName1` to `GreengrassV2IoTThingPolicy` in source code      
 * Change `defaultPolicyName2` to `GreengrassTESCertificatePolicyGreengrassCoreTokenExchangeRoleAlias` in source code  
 * Change `thingGroupName` to `MyGreengrassCoreGroup` in source code    
 * Change `thingGroupArn` values to in source code to your appropriate ones.
