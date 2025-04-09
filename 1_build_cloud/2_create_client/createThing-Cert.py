@@ -17,17 +17,17 @@ defaultThingGroupArn = 'arn:aws:iot:us-east-1:058264177579:thinggroup/MyGreengra
 
 thingClient = boto3.client('iot')
 
-core_cert_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "certertificates")
+core_cert_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "certificates")
 
 #Path to your certificates, modify this
-core_device_certificate_path = os.path.join(core_cert_dir, "thingCert.crt")
-core_device_key_path = os.path.join(core_cert_dir, "privKey.key")
+core_device_certificate_path = os.path.join(core_cert_dir, "CorethingCert.crt")
+core_device_key_path = os.path.join(core_cert_dir, "CoreprivKey.key")
 core_device_root_ca_path = os.path.join(core_cert_dir, "rootCA.pem")
 
 def copy_certificates():
     # Path to the source and destination directories
     source_cert_dir = "/greengrass/v2/"
-    dest_cert_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "certertificates")
+    dest_cert_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "certificates")
 
     # List of the required certificate files
     cert_files = ["privKey.key", "thingCert.crt", "rootCA.pem"]
