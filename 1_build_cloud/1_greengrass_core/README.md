@@ -1,60 +1,37 @@
-# Green Grass
+# AWS GreenGrass Edge Network
 
-This project initializes five AWS MQTT Clients that were created by running `createThing-Cert.py` and connects them to the AWS IoT core.  To check if the MQTT Clients have been successfully connected to the AWS core, they are subscribing to "vehicle/emission/data" topic, and publish data read from `vehicle[0].csv`~`vehicle[4].csv` files.
+This project is about configuring AWS Greegrass Core device to compose AWS edge network.
 
-## Requirements
+## How to Start
 
-* Virtual Environment
-      `emulator_client.py` should be run under virtual environment.
+* AWS IAM User needs to have the permission for `AWSIoTFullAccess` and `AWSIoTDataAccess`
 
-      python -m venv .venv  
-      source .venv/bin/activate       
+* Install `AWS IoT Greengrass Core` software to RaspberryPi  
+  Refer to [here](https://docs.aws.amazon.com/greengrass/v2/developerguide/install-greengrass-core-v2.html) to install AWS IoT Greengrass Core.  
+  - All of the settings are to be default. 
+  - Use Automatic Resource Provisioning
+  
 
-* Install `AWSIoTPythonSDK`
-
-      pip install AWSIoTPythonSDK
-
-* Install `panda`
-
-      pip install pandas
+* Configure `AWS Greegrass Core device`  
+  After installing the AWS Greengrass core software to RaspberryPi, it's important to configure the Greengrass core device properly.  
+  Refer to [this Youtube video](https://youtu.be/tN0DQlQy2kM?si=Z_Yuub4eNE10JxA-) to properly configure the Greengrass Core device.  
 
 
-## Getting Started
-
-* run `createThin-Cert.py` first before running `emulator_client.py`  
-
-* Directory Structure    
-    To run `emulator_client.py`, keeping the directory structure is important.
-
-    1. `createThings` directory and `emulator` directory need to be under the same path.  
-    2. `data` directory needs to be under `emulator` directory.  
-    3. `keys` directory needs to be under `emulator` directory.  
-    4. `certificates` directory needs to be under `createThings` directory.  
-        => `certificates` directory has been automatically created after running `createThing-Cert.py`.  Do not change this directory structure.  
-
-* File names  
-      1. `emulator_client.py` reads vehicle data from `./data/vehicle[0].csv`~`./data/vehicle[4].csv`.  Do not change these file names  
-      2. `emulator_client.py` reads AWS Root key from `./keys/AmazonRootCA1.pem` file.  Download AWS Root key here, and rename it to `AmazonRootCA1.pem`  
-      3. `emulator_client.py` uses certificates that were created when running `createThing-Cert.py`.  Do not change `../createThings/certificates` directory and the contents of it.  
-
-* AWS Endpoint  
-      Copy the AWS End Point and overwrite it to the `configureEndpoint(ENDPOINT)` part in line 32.
+* Create Things  
+  Go to [2_create_client](../2_create_client/)  
 
 
-* How to run
+## Useful Python Files
+These are useful python files to clean up clients, things, and all.  
+Do not use these files unless you want to clean up everything.  
+These are going to erase the AWS Iot Core database, and you may need to install everything again.  
 
-      python emulator_client.py  
-
-* Publish data  
-      After all MQTTClients are initialized and subscribe to "vehicle/emission/data" topic, it will ask "send now?" to publish.  Hit `s` to publish vehicle data.
-
-
-## References
-This implementation references the following sources:    
-* [base code from Professor Matthew Caesar](https://drive.google.com/file/d/14ijMcHnxDTTCNwe-G3DWfy0ZF1C-5pmX/view)
+[delete_all.py](./delete_all.py)  
+[delete_clients.py](./delete_clients.py)  
+[delete_things.py](./delete_things.py)  
 
 ## License
-This project is open-source and free to use under the MIT License.
+This project is open-source and free to use under the MIT License.  
 
 ## Author
-KyoSook Shin (kyosook2@illinois.edu)
+KyoSook Shin (kyosook2@illinois.edu)  

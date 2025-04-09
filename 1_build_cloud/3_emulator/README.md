@@ -1,56 +1,54 @@
-# Device Simulator
+# AWS IoT Client Device Simulator
 
-This project initializes five AWS MQTT Clients that were created by running `createThing-Cert.py` and connects them to the AWS IoT core.  To check if the MQTT Clients have been successfully connected to the AWS core, they are subscribing to "vehicle/emission/data" topic, and publish data read from `vehicle[0].csv`~`vehicle[4].csv` files.
+This project will create docker container to simulate an AWS IoT Client Device.  basic_discovery.py will discovery AWS Greengrass Core Device.  After discovering the Core Device, the simulator can communicate with AWS IoT through AWS Core Device.
 
 ## Requirements
 
-* Virtual Environment
-      `emulator_client.py` should be run under virtual environment.
+* Install Docker   
+  Refer to [here](https://docs.docker.com/engine/install/) to install Docker Engine.
 
-      python -m venv .venv  
-      source .venv/bin/activate       
+* Install Docker Compose  
+  Refer to [here](https://docs.docker.com/compose/install/) to install Docker Compose.
 
-* Install `AWSIoTPythonSDK`
+* Edit Dockerfile   
+  Change `vehicle_0` to appropriate name 
 
-      pip install AWSIoTPythonSDK
+* Build Docker Image for Client Device Simulator   
 
-* Install `panda`
+      docker build -t vehicle_0 .
 
-      pip install pandas
+* Run Docker Container
 
+      docker run -it --name vehicle_0_container vehicle_0 
 
-## Getting Started
+Now you can run AWS Iot Client Device Inside Docker Container
 
-* run `createThin-Cert.py` first before running `emulator_client.py`  
+## Discover AWS IoT Core Device
 
-* Directory Structure    
-    To run `emulator_client.py`, keeping the directory structure is important.
+* Run basic_discovery.py with appropriate arguments
 
-    1. `createThings` directory and `emulator` directory need to be under the same path.  
-    2. `data` directory needs to be under `emulator` directory.  
-    3. `keys` directory needs to be under `emulator` directory.  
-    4. `certificates` directory needs to be under `createThings` directory.  
-        => `certificates` directory has been automatically created after running `createThing-Cert.py`.  Do not change this directory structure.  
+   example:  
+   python basic_discovery.py --thing_name GreengrassClientDevice1 --topic 'clients/GreengrassClientDevice1/hello/world' --message 'Hello World From Cllient Device 1!' --ca_file AmazonRootCA1.pem --cert device1-cert.pem.crt --key private.key --region us-east-1 --verbosity Warn
 
-* File names  
-      1. `emulator_client.py` reads vehicle data from `./data/vehicle[0].csv`~`./data/vehicle[4].csv`.  Do not change these file names  
-      2. `emulator_client.py` reads AWS Root key from `./keys/AmazonRootCA1.pem` file.  Download AWS Root key here, and rename it to `AmazonRootCA1.pem`  
-      3. `emulator_client.py` uses certificates that were created when running `createThing-Cert.py`.  Do not change `../createThings/certificates` directory and the contents of it.  
+## Run AWS IoT Client Device Simulator
 
-* AWS Endpoint  
-      Copy the AWS End Point and overwrite it to the `configureEndpoint(ENDPOINT)` part in line 32.
+* Change `default_aws_endpint_url`
+* Change `default_device_cert_name`.  This must match the one inside `\certificates` directory
+* Change `default_device_key_file_name`.  This must match the one inside `\certificates` directory
+* Change `default_root_ca_name`.  This must match the one inside `\certificates` directory
 
+* Run emulator_client.py
 
-* How to run
+   python emulator_client.py
 
-      python emulator_client.py  
+* Publish data
+      After all MQTTClients are initialized and subscribe to "vehicle/emission/data" topic, it will ask "send now?" to publish. Hit s to publish vehicle data.
 
-* Publish data  
-      After all MQTTClients are initialized and subscribe to "vehicle/emission/data" topic, it will ask "send now?" to publish.  Hit `s` to publish vehicle data.
-
+* Check from AWS Console     
+  You can subscribe "vehicle/emission/data" topic at `AWS iot > MQTT test Client` to check if emulator_client.py is appropriately publishing.  AWS IoT Core Device needs to deploy [MQTT Bridge Component](https://docs.aws.amazon.com/greengrass/v2/developerguide/mqtt-bridge-component.html) to bridge between AWS IoT Client Devices and AWS IoT Cloud Core.
 
 ## References
-This implementation references the following sources:    
+emulator_client.py references the following source:    
 * [base code from Professor Matthew Caesar](https://drive.google.com/file/d/14ijMcHnxDTTCNwe-G3DWfy0ZF1C-5pmX/view)
 
 ## License

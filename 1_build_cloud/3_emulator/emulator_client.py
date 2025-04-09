@@ -6,7 +6,13 @@ import pandas as pd
 import numpy as np
 import logging
 #logging.basicConfig(level=logging.DEBUG)
+import os
+import shutil
 
+default_aws_endpint_url = "a2rf5cc3bhluy5-ats.iot.us-east-1.amazonaws.com"
+default_device_cert_name = "thingCert.crt"
+default_device_key_file_name = "privKey.key"
+default_root_ca_name = "rootCA.pem"
 
 #TODO 1: modify the following parameters
 #Starting and end index, modify this
@@ -16,11 +22,11 @@ device_end = 5
 
 #Path to the dataset, modify this
 data_path = "./data/vehicle{}.csv"
+cert_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "certertificates")
 
-#Path to your certificates, modify this
-certificate_formatter = "../2_createThings/certificates/vehicle_{}_cert.pem"
-key_formatter = "../2_createThings/certificates/vehicle_{}_private.key"
-
+device_certificate_path = os.path.join(cert_dir, default_device_cert_name)
+device_key_path = os.path.join(cert_dir, default_device_key_file_name)
+root_ca_path = os.path.join(cert_dir, default_root_ca_name)
 
 class MQTTClient:
     def __init__(self, device_id, cert, key):
@@ -29,8 +35,8 @@ class MQTTClient:
         self.state = 0
         self.client = AWSIoTMQTTClient(self.device_id)
         #TODO 2: modify your broker address
-        self.client.configureEndpoint("a2rf5cc3bhluy5-ats.iot.us-east-1.amazonaws.com", 8883)
-        self.client.configureCredentials("./keys/AmazonRootCA1.pem", key, cert)
+        self.client.configureEndpoint(default_aws_endpint_path, 8883)
+        self.client.configureCredentials(root_ca_path, key, cert)
         self.client.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
         self.client.configureDrainingFrequency(2)  # Draining: 2 Hz
         self.client.configureConnectDisconnectTimeout(10)  # 10 sec
@@ -83,7 +89,7 @@ for i in range(5):
 print("Initializing MQTTClients...")
 clients = []
 for device_id in range(device_st, device_end):
-    client = MQTTClient(device_id,certificate_formatter.format(device_id) ,key_formatter.format(device_id))
+    client = MQTTClient(device_id,device_certificate_path ,device_key_path)
     client.client.connect()
     client.subscribe("vehicle/emission/data")
     clients.append(client)

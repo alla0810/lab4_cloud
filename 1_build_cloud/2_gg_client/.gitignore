@@ -1,9 +1,0 @@
-.env
-.venv
-/keys
-/certificates
-.keys
-.pem
-.crt
-/cert
-
