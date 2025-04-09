@@ -2,6 +2,8 @@ FROM python:3.11
 
 WORKDIR /home
 
+RUN apt-get update && apt-get install -y vim && rm -rf /var/lib/apt/lists/*
+
 RUN pip install AWSIoTPythonSDK pandas numpy awscrt awsiot boto3 awsiotsdk
 
 COPY ./basic_discovery.py /home/basic_discovery.py

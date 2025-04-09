@@ -30,6 +30,8 @@ Now you can run AWS Iot Client Device Inside Docker Container
    example:  
    python basic_discovery.py --thing_name GreengrassClientDevice1 --topic 'clients/GreengrassClientDevice1/hello/world' --message 'Hello World From Cllient Device 1!' --ca_file AmazonRootCA1.pem --cert device1-cert.pem.crt --key private.key --region us-east-1 --verbosity Warn
 
+* Refer to [this Youtube video](https://youtu.be/tN0DQlQy2kM?si=Z_Yuub4eNE10JxA-) to properly configure the Greengrass Core device to associate with Client Device.
+
 ## Run AWS IoT Client Device Simulator
 
 * Change `default_aws_endpint_url`
