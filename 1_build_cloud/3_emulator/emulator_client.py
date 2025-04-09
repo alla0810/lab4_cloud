@@ -22,7 +22,7 @@ device_end = 5
 
 #Path to the dataset, modify this
 data_path = "./data/vehicle{}.csv"
-cert_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "certertificates")
+cert_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "certificates")
 
 device_certificate_path = os.path.join(cert_dir, default_device_cert_name)
 device_key_path = os.path.join(cert_dir, default_device_key_file_name)
