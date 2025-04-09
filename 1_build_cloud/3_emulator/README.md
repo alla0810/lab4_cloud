@@ -15,11 +15,11 @@ This project will create docker container to simulate an AWS IoT Client Device. 
 
 * Build Docker Image for Client Device Simulator   
 
-      docker build -t vehicle_0 .
+      sudo docker build -t vehicle_0 .
 
 * Run Docker Container
 
-      docker run -it --name vehicle_0_container vehicle_0 
+      sudo docker run -it --name vehicle_0_container vehicle_0 
 
 Now you can run AWS Iot Client Device Inside Docker Container
 
