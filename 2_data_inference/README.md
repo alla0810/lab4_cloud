@@ -127,12 +127,14 @@ Use AWS Console or CLI to:
       },
       "Artifacts": [
         {
-          "Uri": "s3://tamim-greengrass-artifacts/artifacts/main.py",
+          "Uri": "s3://tamim-greengrass-artifacts/artifacts/main.py", 
           "Unarchive": "NONE"
+          // Replace with your own S3 URI if you're cloning this repo
         },
         {
-          "Uri": "s3://tamim-greengrass-artifacts/artifacts/process_emission.py",
+          "Uri": "s3://tamim-greengrass-artifacts/artifacts/process_emission.py", 
           "Unarchive": "NONE"
+          // Replace with your own S3 URI if you're cloning this repo
         }
       ]
     }
