@@ -46,9 +46,8 @@ You also need to clone and use configuration files from Kyosook's project:
 ### 1. Clone the Project Repositories
 
 ```bash  
-git clone https://github.com/alla0810/lab4_cloud.git  
-https://github.com/alla0810/lab4_cloud/tree/main/2_data_inference 
-cd 2_data_inference   
+git clone https://github.com/alla0810/lab4_cloud.git
+cd lab4_cloud/2_data_inference  
 ```
 
 ---
