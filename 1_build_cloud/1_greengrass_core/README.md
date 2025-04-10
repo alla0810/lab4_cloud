@@ -33,5 +33,3 @@ These are going to erase the AWS Iot Core database, and you may need to install 
 ## License
 This project is open-source and free to use under the MIT License.  
 
-## Author
-KyoSook Shin (kyosook2@illinois.edu)  

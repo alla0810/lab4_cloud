@@ -56,5 +56,3 @@ emulator_client.py references the following source:
 ## License
 This project is open-source and free to use under the MIT License.
 
-## Author
-KyoSook Shin (kyosook2@illinois.edu)
