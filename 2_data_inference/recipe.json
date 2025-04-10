@@ -1,0 +1,106 @@
+{
+  "RecipeFormatVersion": "2020-01-25",
+  "ComponentName": "com.example.EmissionProcessor",
+  "ComponentVersion": "1.0.1",
+  "ComponentDescription": "Component that processes vehicle emission data",
+  "ComponentPublisher": "Tamim",
+  "ComponentDependencies": {
+    "aws.greengrass.TokenExchangeService": {
+      "VersionRequirement": ">=2.0.0",
+      "DependencyType": "HARD"
+    }
+  },
+  "ComponentConfiguration": {
+    "DefaultConfiguration": {
+      "accessControl": {
+        "aws.greengrass.ipc.mqttproxy": {
+          "com.example.EmissionProcessor:mqttproxy:1": {
+            "policyDescription": "Allows access to subscribe and publish to MQTT topics",
+            "operations": [
+              "aws.greengrass#SubscribeToIoTCore",
+              "aws.greengrass#PublishToIoTCore"
+            ],
+            "resources": [
+              "vehicle/+/emission",
+              "vehicle/+/result"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "Manifests": [
+    {
+      "Platform": {
+        "os": "linux"
+      },
+      "Lifecycle": {
+        "Install": "pip3 install awsiotsdk",
+        "Run": "python3 {artifacts:path}/main.py"
+      },
+      "Artifacts": [
+        {
+          "Uri": "s3://tamim-greengrass-artifacts/artifacts/main.py",
+          "Unarchive": "NONE"
+        },
+        {
+          "Uri": "s3://tamim-greengrass-artifacts/artifacts/process_emission.py",
+          "Unarchive": "NONE"
+        }
+      ]
+    }
+  ]
+}
+{
+  "RecipeFormatVersion": "2020-01-25",
+  "ComponentName": "com.example.EmissionProcessor",
+  "ComponentVersion": "1.0.1",
+  "ComponentDescription": "Component that processes vehicle emission data",
+  "ComponentPublisher": "Tamim",
+  "ComponentDependencies": {
+    "aws.greengrass.TokenExchangeService": {
+      "VersionRequirement": ">=2.0.0",
+      "DependencyType": "HARD"
+    }
+  },
+  "ComponentConfiguration": {
+    "DefaultConfiguration": {
+      "accessControl": {
+        "aws.greengrass.ipc.mqttproxy": {
+          "com.example.EmissionProcessor:mqttproxy:1": {
+            "policyDescription": "Allows access to subscribe and publish to MQTT topics",
+            "operations": [
+              "aws.greengrass#SubscribeToIoTCore",
+              "aws.greengrass#PublishToIoTCore"
+            ],
+            "resources": [
+              "vehicle/+/emission",
+              "vehicle/+/result"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "Manifests": [
+    {
+      "Platform": {
+        "os": "linux"
+      },
+      "Lifecycle": {
+        "Install": "pip3 install awsiotsdk",
+        "Run": "python3 {artifacts:path}/main.py"
+      },
+      "Artifacts": [
+        {
+          "Uri": "s3://tamim-greengrass-artifacts/artifacts/main.py",
+          "Unarchive": "NONE"
+        },
+        {
+          "Uri": "s3://tamim-greengrass-artifacts/artifacts/process_emission.py",
+          "Unarchive": "NONE"
+        }
+      ]
+    }
+  ]
+}
