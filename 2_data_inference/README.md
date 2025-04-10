@@ -37,7 +37,7 @@ Before starting, ensure you have the following:
 
 You also need to clone and use configuration files from Kyosook's project:
 
-**➡ GitHub repo**: [https://github.com/alla0810/lab4_cloud](https://github.com/alla0810/lab4_cloud)
+** GitHub repo**: [https://github.com/alla0810/lab4_cloud](https://github.com/alla0810/lab4_cloud)
 
 ---
 
