@@ -6,8 +6,8 @@ This project demonstrates the use of AWS IoT and Greengrass to process and visua
 
 ### Current Status
 
-- **Step 1**: Setup AWS Greengrass Core. ✅
-- **Step 2**: Processed vehicle emission data with a Greengrass component. ✅
+- **Step 1**: Setup AWS Greengrass Core. 
+- **Step 2**: Processed vehicle emission data with a Greengrass component. 
 - **Step 3**: *In Progress* – configuring **Firehose**, **Glue**, **Athena** for data visualization _(To be completed by another group member)_
 
 ---
