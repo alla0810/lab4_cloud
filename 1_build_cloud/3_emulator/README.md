@@ -53,8 +53,8 @@ This gives you an interactive shell inside the container.
 
 Run basic_discovery.py with appropriate arguments to discover the AWS Greengrass Core:
 
-```
 (example)
+```
 python basic_discovery.py \
   --thing_name GreengrassClientDevice1 \
   --topic 'clients/GreengrassClientDevice1/hello/world' \
