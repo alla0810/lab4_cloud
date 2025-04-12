@@ -1,52 +1,83 @@
 # Create AWS IoT Thing using python and boto3
 
-This project will create things on AWS IoT platform using boto3 and download the certificates.
+This project automates the creation of AWS IoT Things using **Python** and **boto3**, and downloads associated certificates for use with AWS IoT Core.
 
 ## Requirements
 
-* Set up AWS CLI  
-    Install the AWS CLI for Raspberry Pi.
+### 1. Set up AWS CLI  
+Install the AWS CLI on Raspberry Pi:
 
-      curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"
-      unzip awscliv2.zip
-      sudo ./aws/install
+```
+curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+```
 
-    AWS CLI is successfully installed if you can see the following when you type `aws --version` command  
+Verify installation
+```
+aws --version
+```
 
-      aws-cli/2.x.x Python/3.x.x Linux/aarch64
+Expected output (version may vary):
 
-* After installing AWS CLI, then you can use it to configure your credentials file:
+```
+aws-cli/2.x.x Python/3.x.x Linux/aarch64
+```
 
-      aws configure
+### 2. Configure AWS Credentials
+You can configure AWS credentials in one of two ways:  
+**Option A: Using the AWS CLI**
+```
+aws configure
+```
+**Option B: Manually editing the redentials file**
+Edit ~/.aws/credentials:
 
-  You can create a credentials by creating credentials file under `~/.aws/` (`~/.aws/credentials`) and put:
-  
-      aws_access_key_id = YOUR_ACCESS_KEY
-      aws_secret_access_key = YOUR_SECRET_KEY
+```  
+[default]
+aws_access_key_id = YOUR_ACCESS_KEY
+aws_secret_access_key = YOUR_SECRET_KEY
+```
       
-* Install Boto3 inside venv.  
-  You can find more information about Boto3 [here](https://boto3.readthedocs.io/en/latest/guide/quickstart.html#installation)  
+### 3. Install Boto3 in a Virtual Environment  
+```
+python -m venv .venv  
+source .venv/bin/activate      
+pip install boto3  
+```      
 
-      python -m venv .venv  
-      source .venv/bin/activate      
-      pip install boto3  
+Refer to [Boto3 documentation](https://boto3.readthedocs.io/en/latest/guide/quickstart.html#installation) for more details
+
 
 ## How to Run
 
-* Change `defaultPolicyName1` to `GreengrassV2IoTThingPolicy` in source code      
-* Change `defaultPolicyName2` to `GreengrassTESCertificatePolicyGreengrassCoreTokenExchangeRoleAlias` in source code  
-* Change `thingGroupName` to `MyGreengrassCoreGroup` in source code    
-* Change `thingGroupArn` values to in source code to your appropriate ones.
+### 1. Update the following variables in the source code (createThing-Cert.py) as needed:
 
-* Run it
+* `defaultPolicyName1 = GreengrassV2IoTThingPolicy` 
+* `defaultPolicyName2 = GreengrassTESCertificatePolicyGreengrassCoreTokenExchangeRoleAlias`  
+* `thingGroupName = MyGreengrassCoreGroup` 
+* `thingGroupArn = "YOUR_THING_GROUP_ARN"`
 
-      python createThing-Cert.py
+### 2. Run the script:
+```
+python createThing-Cert.py
+```      
 
-* Copy [certificates](./certificates/) directory to [3_emulator](../3_emulator/) directory
+## 3. Move generated certificates:
+Copy the [certificates](./certificates/) directory to [3_emulator](../3_emulator/) directory
+
+```
+cp -r certificates ../3_emulator/
+```
 
 ## References
-This implementation references the following sources:    
+This implementation references the following:    
 * [keivanK1/aws-create-thing-boto3.git](https://github.com/keivanK1/aws-create-thing-boto3.git)
+
+
+## Author
+KyoSook Shin (kyosook2@illinois.edu)
+
 
 ## License
 This project is open-source and free to use under the MIT License.

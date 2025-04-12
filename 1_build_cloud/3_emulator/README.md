@@ -1,57 +1,112 @@
 # AWS IoT Client Device Simulator
 
-This project will create docker container to simulate an AWS IoT Client Device.  basic_discovery.py will discovery AWS Greengrass Core Device.  After discovering the Core Device, the simulator can communicate with AWS IoT through AWS Core Device.
+This module provides a Docker-based simulator for an AWS IoT Client Device.  It uses   `basic_discovery.py` to discover an AWS Greengrass Core device, and then enables MQTT communication through the core device to AWS IoT Clouse.
 
 ## Requirements
 
-* Install Docker   
-  Refer to [here](https://docs.docker.com/engine/install/) to install Docker Engine.
+### 1. Install Docker & Docker Compose
+* [Install Docker Engine](https://docs.docker.com/engine/install/)
 
-* Install Docker Compose  
-  Refer to [here](https://docs.docker.com/compose/install/) to install Docker Compose.
+* [Install Docker Compose](https://docs.docker.com/compose/install/)
 
-* Edit Dockerfile   
-  Change `vehicle_0` to appropriate name 
+### 2. Prepare Dockerfile
+* Open the `Dockerfile` and change `vehicle_0` to your preferred device name
+  
 
-* Build Docker Image for Client Device Simulator   
+### 3. Build Docker Image
+```
+sudo docker build -t vehicle_0 .
+```      
 
-      sudo docker build -t vehicle_0 .
+### 4. Run Docker Container
+```
+sudo docker run -it --name vehicle_0_container vehicle_0 
+```      
+You now have a running IoT Client Device Simulator inside a Docker container.
 
-* Run Docker Container
+### 5. Reconnect to Running Docker Container After Reboot or SSH Login
+When you reconnect via SSH and want to resume working inside a running Docker container:
 
-      sudo docker run -it --name vehicle_0_container vehicle_0 
+#### 1. List Running Docker Container
+```
+sudo docker ps
+```
 
-Now you can run AWS Iot Client Device Inside Docker Container
+You will see output like:
 
-## Discover AWS IoT Core Device
+````
+CONTAINER ID   IMAGE       COMMAND       CREATED       STATUS        PORTS     NAMES
+a1b2c3d4e5f6   vehicle_0   "/bin/bash"   2 hours ago   Up 2 hours              vehicle_0_container
+````
 
-* Run basic_discovery.py with appropriate arguments
+#### 2. Enter the Running Container
+Use the container name or ID from the list above:
 
-   example:  
-   python basic_discovery.py --thing_name GreengrassClientDevice1 --topic 'clients/GreengrassClientDevice1/hello/world' --message 'Hello World From Cllient Device 1!' --ca_file AmazonRootCA1.pem --cert device1-cert.pem.crt --key private.key --region us-east-1 --verbosity Warn
+```
+sudo docker exec -it vehicle_0_container /bin/bash
+```
 
-* Refer to [this Youtube video](https://youtu.be/tN0DQlQy2kM?si=Z_Yuub4eNE10JxA-) to properly configure the Greengrass Core device to associate with Client Device.
+This gives you an interactive shell inside the container.
 
-## Run AWS IoT Client Device Simulator
 
-* Change `default_aws_endpint_url`
-* Change `default_device_cert_name`.  This must match the one inside `\certificates` directory
-* Change `default_device_key_file_name`.  This must match the one inside `\certificates` directory
-* Change `default_root_ca_name`.  This must match the one inside `\certificates` directory
+## Discover Greengrass Core Device
 
-* Run emulator_client.py
+Run basic_discovery.py with appropriate arguments to discover the AWS Greengrass Core:
 
-   python emulator_client.py
+```
+(example)
+python basic_discovery.py \
+  --thing_name GreengrassClientDevice1 \
+  --topic 'clients/GreengrassClientDevice1/hello/world' \
+  --message 'Hello World from Client Device 1!' \
+  --ca_file AmazonRootCA1.pem \
+  --cert device1-cert.pem.crt \
+  --key private.key \
+  --region us-east-1 \
+  --verbosity Warn
 
-* Publish data
-      After all MQTTClients are initialized and subscribe to "vehicle/emission/data" topic, it will ask "send now?" to publish. Hit s to publish vehicle data.
+```   
 
-* Check from AWS Console     
-  You can subscribe "vehicle/emission/data" topic at `AWS iot > MQTT test Client` to check if emulator_client.py is appropriately publishing.  AWS IoT Core Device needs to deploy [MQTT Bridge Component](https://docs.aws.amazon.com/greengrass/v2/developerguide/mqtt-bridge-component.html) to bridge between AWS IoT Client Devices and AWS IoT Cloud Core.
+* Refer to this helpful [Youtube video](https://youtu.be/tN0DQlQy2kM?si=Z_Yuub4eNE10JxA-) for configuring the Greengrass Core device.
+
+## Run Client Device Simulator
+
+### 1. Configure `emulator_client.py`
+Make sure the following variables point to the correct files in your `\certificates` directory
+
+* `default_aws_endpint_url`
+* `default_device_cert_name`
+* `default_device_key_file_name`
+* `default_root_ca_name`
+
+### 2. Run the Client Emulator
+```
+python emulator_client.py
+```   
+
+### 3. Publish data
+Once all MQTT clients are initialized and subscribed to the topic `vehicle/emission/data`, the script will prompt:
+```
+send now? [s to publish]
+```
+Press `s` to publish simulated vehicle data to AWS IoT.
+
+### 4. Verify on  AWS Console     
+You can verify the data is being published via:  
+**AWS IoT > MQTT Test Client > Subscribe to topic:**
+```
+vehicle/emission/data
+```
+The AWS Greengrass Core must have the [MQTT Bridge Component](https://docs.aws.amazon.com/greengrass/v2/developerguide/mqtt-bridge-component.html) deployed to bridge communication between edge devices and the cloud.
 
 ## References
 emulator_client.py references the following source:    
-* [base code from Professor Matthew Caesar](https://drive.google.com/file/d/14ijMcHnxDTTCNwe-G3DWfy0ZF1C-5pmX/view)
+* [Professor Matthew Caesar's IoT Project](https://drive.google.com/file/d/14ijMcHnxDTTCNwe-G3DWfy0ZF1C-5pmX/view)
+
+
+## Author
+KyoSook Shin (kyosook2@illinois.edu)
+
 
 ## License
 This project is open-source and free to use under the MIT License.
