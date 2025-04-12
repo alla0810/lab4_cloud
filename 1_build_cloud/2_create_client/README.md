@@ -63,7 +63,7 @@ Refer to [Boto3 documentation](https://boto3.readthedocs.io/en/latest/guide/quic
 python createThing-Cert.py
 ```      
 
-## 3. Move generated certificates:
+## 3. Copy generated certificates:
 Copy the [certificates](./certificates/) directory to [3_emulator](../3_emulator/) directory
 
 ```
