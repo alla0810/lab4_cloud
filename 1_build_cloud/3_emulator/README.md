@@ -10,7 +10,7 @@ This module provides a Docker-based simulator for an AWS IoT Client Device.  It 
 * [Install Docker Compose](https://docs.docker.com/compose/install/)
 
 ### 2. Prepare Dockerfile
-* Open the `Dockerfile` and change `vehicle_0` to your preferred device name
+* Open the [Dockerfile](./Dockerfile) and change `vehicle_0` to your preferred device name
   
 
 ### 3. Build Docker Image
