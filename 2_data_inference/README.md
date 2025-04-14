@@ -188,7 +188,7 @@ We are recording short clips of each step and will merge them into a full 10-min
 
 - ✅ Setup Greengrass and component deployment
 - ✅ Emulator publishing data and Processor receiving logs
-- ⏳ Firehose → Glue → Athena → SageMaker (in progress)
+- ✅  Firehose → Glue → Athena → SageMaker 
 
 Final video will be uploaded soon.
 
